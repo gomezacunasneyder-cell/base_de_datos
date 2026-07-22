@@ -40,7 +40,17 @@ Según el material de clase ("Componentes Esenciales del Modelo E-R"):
 | `<contiene>` | Venta → Detalle_Venta | 1:N |
 
 La relación conceptual original Venta–Producto es N:M; se resuelve con la entidad débil `Detalle_Venta`, que la descompone en dos relaciones 1:N.
+🎯 Pistas para la Modelación (Entidad-Relación) — Sistema de Ventas de Repuestos y Accesorios
 
+Para facilitarte la estructuración del diagrama, aquí tienes una guía rápida de las relaciones que deberías mapear:
+
+Entidades a Relacionar	Tipo de Relación	Notas/Consideraciones
+Categoría ↔ Producto	1:N	Una categoría (frenos, motor, suspensión, eléctrico) agrupa muchos productos, pero cada producto pertenece a una sola categoría.
+Cliente ↔ Venta	1:N	Un cliente realiza muchas ventas (facturas), pero cada venta pertenece a un solo cliente.
+Empleado ↔ Venta	1:N	Un empleado (vendedor) procesa muchas ventas, pero cada venta la procesa un solo empleado.
+Venta ↔ Producto	M:N	Requerirá una tabla intermedia (Detalle_Venta), guardando la cantidad vendida y el precio unitario histórico en el momento de la transacción.
+Producto ↔ Proveedor (opcional, si se extiende el modelo)	M:N	Requerirá tabla de detalle (ej. Producto_Proveedor), guardando el precio de compra y tiempos de entrega — útil si quieres modelar de dónde se abastece cada repuesto.
+Cliente ↔ Producto (Reseña) (opcional, si se extiende el modelo)	M:N	O relación ternaria según tu enfoque, guardando calificación y comentario — simula reseñas de calidad de un repuesto.
 
 ## Historial de prompts enviados durante el desarrollo
 
