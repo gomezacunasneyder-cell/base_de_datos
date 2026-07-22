@@ -31,6 +31,7 @@ Según el material de clase ("Componentes Esenciales del Modelo E-R"):
 - `DETALLE_VENTA` (**débil**) — cantidad, precio_unitario_venta, subtotal (clave compuesta: id_venta + id_producto)
 
 **Relaciones:**
+
 | Relación | Entre | Cardinalidad |
 |---|---|---|
 | `<clasifica>` | Categoria → Producto | 1:N |
@@ -40,17 +41,62 @@ Según el material de clase ("Componentes Esenciales del Modelo E-R"):
 | `<contiene>` | Venta → Detalle_Venta | 1:N |
 
 La relación conceptual original Venta–Producto es N:M; se resuelve con la entidad débil `Detalle_Venta`, que la descompone en dos relaciones 1:N.
-🎯 Pistas para la Modelación (Entidad-Relación) — Sistema de Ventas de Repuestos y Accesorios
 
-Para facilitarte la estructuración del diagrama, aquí tienes una guía rápida de las relaciones que deberías mapear:
+## Cómo importar el diagrama en draw.io
 
-Entidades a Relacionar	Tipo de Relación	Notas/Consideraciones
-Categoría ↔ Producto	1:N	Una categoría (frenos, motor, suspensión, eléctrico) agrupa muchos productos, pero cada producto pertenece a una sola categoría.
-Cliente ↔ Venta	1:N	Un cliente realiza muchas ventas (facturas), pero cada venta pertenece a un solo cliente.
-Empleado ↔ Venta	1:N	Un empleado (vendedor) procesa muchas ventas, pero cada venta la procesa un solo empleado.
-Venta ↔ Producto	M:N	Requerirá una tabla intermedia (Detalle_Venta), guardando la cantidad vendida y el precio unitario histórico en el momento de la transacción.
-Producto ↔ Proveedor (opcional, si se extiende el modelo)	M:N	Requerirá tabla de detalle (ej. Producto_Proveedor), guardando el precio de compra y tiempos de entrega — útil si quieres modelar de dónde se abastece cada repuesto.
-Cliente ↔ Producto (Reseña) (opcional, si se extiende el modelo)	M:N	O relación ternaria según tu enfoque, guardando calificación y comentario — simula reseñas de calidad de un repuesto.
+1. Entra a [app.diagrams.net](https://app.diagrams.net/)
+2. Menú **Extras → Importar desde → Dispositivo**
+3. Selecciona el archivo `.drawio`
+4. El diagrama se carga en el lienzo, editable
+
+---
+
+## Caso de Estudio: Modelo Entidad-Relación para "MotoRepuestos Xtreme"
+
+### Objetivo de la Asignación
+
+Diseñar y comprender el Modelo Entidad-Relación (MER) utilizando llaves primarias (PK) y llaves foráneas (FK), definiendo correctamente la cardinalidad entre las entidades, aplicado a un entorno real de gestión de inventario, clientes, empleados y ventas en una tienda de repuestos y accesorios para motocicletas.
+
+### 1. Prompt Utilizado (One-Shot Prompt)
+
+Para iniciar la conceptualización de este proyecto y estructurar el caso de estudio, se utilizó la siguiente instrucción estructurada dirigida a un modelo de Inteligencia Artificial. Este "One-Shot Prompt" define el rol, el alcance y los requerimientos técnicos en una sola petición:
+
+> "Actuarás como experto en manejo de base de datos. Quiero aprender el modelo entidad-relación, usando primary key (PK) y foreign key (FK), así que he decidido tomar un caso de estudio basado en una tienda de repuestos y accesorios para motos. Crea un plano conceptual, buscando enfatizar ejemplos con la relación de cardinalidad para entender cómo se conectan las tablas de clientes, empleados, categorías, productos (repuestos como pastillas de freno, filtros, amortiguadores, baterías) y las ventas con su respectivo detalle."
+
+### 2. Explicación del Modelo Conceptual (Notación de Chen)
+
+A partir del análisis generado, se diseñó el diagrama conceptual adjunto (referenciado como `ER_Completo_Sistema_Ventas_Repuestos.drawio` en el contexto del taller). El sistema se compone de seis entidades principales y sus respectivas relaciones:
+
+- **CLIENTE**: Almacena la información de contacto de los compradores. Su atributo principal (PK) es `id_cliente`.
+- **EMPLEADO**: Representa al vendedor que atiende cada transacción. Su PK es `id_empleado`. Se relaciona con Venta bajo una cardinalidad 1:N (un empleado procesa muchas ventas, pero cada venta la procesa un solo empleado).
+- **CATEGORIA**: Clasifica los repuestos por tipo (frenos, motor, suspensión, eléctrico). Su PK es `id_categoria`, y se relaciona con Productos bajo cardinalidad 1:N.
+- **PRODUCTO**: Representa el inventario físico de repuestos y accesorios (ej. pastillas de freno, filtros de aceite, amortiguadores). Su PK es `id_producto`. Posee atributos adicionales como `codigo`, `precio_unitario` y `stock` para el control de inventario.
+- **VENTA**: Representa la factura generada. Su PK es `id_venta`. Contiene las llaves foráneas `id_cliente` e `id_empleado` para establecer las relaciones de cardinalidad 1:N correspondientes (un cliente realiza muchas ventas, pero cada venta pertenece a un solo cliente).
+- **DETALLE_VENTA**: Actúa como la entidad intermedia (entidad débil) que resuelve la cardinalidad de Muchos a Muchos (N:M) entre las ventas y los productos.
+  - Posee una cardinalidad 1:N con Venta (una venta contiene muchos detalles).
+  - Posee una cardinalidad N:1 con Producto (muchos detalles incluyen un mismo repuesto).
+  - Utiliza `id_venta` e `id_producto` como llaves foráneas (que en conjunto forman su clave primaria compuesta) para registrar la cantidad vendida y el precio al que se vendió en esa transacción específica, manteniendo la integridad de la facturación aunque el precio del repuesto cambie después en el catálogo.
+
+### 3. Conclusión del Diseño
+
+El uso de la entidad `Detalle_Venta` garantiza que no exista duplicidad de datos y que el modelo cumpla con las reglas de normalización de bases de datos relacionales, separando correctamente la cabecera de la factura (Venta) de los ítems individuales vendidos (Detalle_Venta). Esto permite llevar un control preciso de qué repuestos componen cada venta, conservar el precio histórico de cada transacción y mantener actualizado el stock disponible de cada producto, sin redundancia de información entre las tablas.
+
+---
+
+## 🎯 Pistas para la Modelación (Entidad-Relación)
+
+Guía rápida de las relaciones mapeadas en el proyecto:
+
+| Entidades a Relacionar | Tipo de Relación | Notas/Consideraciones |
+|---|---|---|
+| Categoría ↔ Producto | 1:N | Una categoría (frenos, motor, suspensión, eléctrico) agrupa muchos productos, pero cada producto pertenece a una sola categoría. |
+| Cliente ↔ Venta | 1:N | Un cliente realiza muchas ventas (facturas), pero cada venta pertenece a un solo cliente. |
+| Empleado ↔ Venta | 1:N | Un empleado (vendedor) procesa muchas ventas, pero cada venta la procesa un solo empleado. |
+| Venta ↔ Producto | M:N | Requerirá una tabla intermedia (`Detalle_Venta`), guardando la cantidad vendida y el precio unitario histórico en el momento de la transacción. |
+| Producto ↔ Proveedor *(opcional, extensión)* | M:N | Requerirá tabla de detalle (ej. `Producto_Proveedor`), guardando el precio de compra y tiempos de entrega — útil si quieres modelar de dónde se abastece cada repuesto. |
+| Cliente ↔ Producto (Reseña) *(opcional, extensión)* | M:N | O relación ternaria según tu enfoque, guardando calificación y comentario — simula reseñas de calidad de un repuesto. |
+
+---
 
 ## Historial de prompts enviados durante el desarrollo
 
@@ -74,10 +120,15 @@ Registro de las solicitudes que diste para construir este proyecto, en orden:
 6. > siguie estas inidicaciones
    *(adjuntando 15 capturas del material del curso: ejemplos de cardinalidad 1:1, 1:N, N:M, componentes del modelo E-R, llaves primarias/foráneas, SQL vs NoSQL, etc., para ajustar la notación exacta usada en clase)*
 
-7. > generame mas cosas una estructura completa y detallada
+7. > ok damelo para pasarselo a draw.io
 
-8. > como se veria
+8. > que parte
+   *(captura del menú Archivo de draw.io, preguntando dónde importar el archivo)*
+
+9. > generame mas cosas una estructura completa y detallada
+
+10. > como se veria
     *(pidiendo ver el resultado visual de los rombos con los nombres de relación ya escritos)*
 
-9. > creame un readme sobre eso y el promt que yo te mande
-    *(este documento)*
+11. > creame un readme sobre eso y el promt que yo te mande
+
