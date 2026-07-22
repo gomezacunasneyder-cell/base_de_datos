@@ -72,15 +72,10 @@ Registro de las solicitudes que diste para construir este proyecto, en orden:
 6. > siguie estas inidicaciones
    *(adjuntando 15 capturas del material del curso: ejemplos de cardinalidad 1:1, 1:N, N:M, componentes del modelo E-R, llaves primarias/foráneas, SQL vs NoSQL, etc., para ajustar la notación exacta usada en clase)*
 
-7. > ok damelo para pasarselo a draw.io
+7. > generame mas cosas una estructura completa y detallada
 
-8. > que parte
-   *(captura del menú Archivo de draw.io, preguntando dónde importar el archivo)*
-
-9. > generame mas cosas una estructura completa y detallada
-
-10. > como se veria
+8. > como se veria
     *(pidiendo ver el resultado visual de los rombos con los nombres de relación ya escritos)*
 
-11. > creame un readme sobre eso y el promt que yo te mande
+9. > creame un readme sobre eso y el promt que yo te mande
     *(este documento)*
