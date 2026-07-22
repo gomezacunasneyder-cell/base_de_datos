@@ -41,14 +41,6 @@ Según el material de clase ("Componentes Esenciales del Modelo E-R"):
 
 La relación conceptual original Venta–Producto es N:M; se resuelve con la entidad débil `Detalle_Venta`, que la descompone en dos relaciones 1:N.
 
-## Cómo importar el diagrama en draw.io
-
-1. Entra a [app.diagrams.net](https://app.diagrams.net/)
-2. Menú **Extras → Importar desde → Dispositivo**
-3. Selecciona el archivo `.drawio`
-4. El diagrama se carga en el lienzo, editable
-
----
 
 ## Historial de prompts enviados durante el desarrollo
 
