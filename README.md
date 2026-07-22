@@ -1,6 +1,36 @@
 # Sistema de Ventas de Repuestos y Accesorios — Modelo E-R
 
-Proyecto académico de diseño de base de datos: del caos inicial (requerimientos en texto) hasta el modelo Entidad-Relación y su traducción a tablas SQL, siguiendo la metodología de 3 pasos ("Del Concepto a la Arquitectura Final") y la notación vista en clase.
+Diseñar y comprender el Modelo Entidad-Relación (MER) utilizando llaves primarias (PK), llaves foráneas (FK) y definiendo correctamente la cardinalidad entre las entidades, aplicado a un entorno real de gestión de inventario y facturación. Este proyecto académico recorre el proceso completo de diseño de base de datos: parte del caos inicial (requerimientos en texto) hasta llegar al modelo Entidad-Relación y su traducción a tablas SQL, siguiendo la metodología de 3 pasos ("Del Concepto a la Arquitectura Final") y la notación vista en clase.
+
+## Funcionalidades del sistema
+
+El sistema modelado debe soportar las siguientes operaciones sobre el negocio de venta de repuestos y accesorios para motos:
+
+**Gestión de inventario**
+- Registrar, consultar, actualizar y eliminar productos (repuestos y accesorios).
+- Clasificar cada producto dentro de una categoría (frenos, motor, suspensión, eléctrico, etc.).
+- Controlar el stock disponible de cada producto y alertar cuando esté por debajo de un mínimo.
+- Actualizar el precio unitario de un producto sin afectar el precio ya facturado en ventas anteriores.
+
+**Gestión de clientes**
+- Registrar clientes con su documento, nombre, correo y teléfono.
+- Consultar el historial de compras de un cliente específico.
+
+**Gestión de empleados**
+- Registrar empleados (vendedores) con su documento, nombre, cargo y fecha de contratación.
+- Asociar cada venta al empleado que la atendió, para control de desempeño y comisiones.
+
+**Gestión de ventas y facturación**
+- Generar una nueva venta (factura) asociada a un cliente y a un empleado.
+- Registrar el detalle de cada venta: qué productos, en qué cantidad y a qué precio se vendieron.
+- Calcular automáticamente el subtotal por línea y el total de la factura.
+- Conservar el precio histórico de venta de cada producto, aunque el precio en el catálogo cambie después.
+- Consultar facturas por número, fecha o cliente.
+
+**Reportes**
+- Productos más vendidos por cantidad.
+- Total facturado por cliente o por empleado en un periodo.
+- Productos con stock bajo, para gestionar reabastecimiento.
 
 ## Contenido del proyecto
 
@@ -131,4 +161,3 @@ Registro de las solicitudes que diste para construir este proyecto, en orden:
     *(pidiendo ver el resultado visual de los rombos con los nombres de relación ya escritos)*
 
 11. > creame un readme sobre eso y el promt que yo te mande
-
